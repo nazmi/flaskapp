@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input from User</title>
+</head>
+<body>
+    <form id="inputForm">
+        <input type="text" id="userInput" placeholder="Enter text">
+        <button type="button" onclick="sendInput()">Submit</button>
+    </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        const socket = io.connect('http://localhost:5000');
+
+        function sendInput() {
+            let userInput = document.getElementById('userInput').value;
+            socket.emit('send_input', { input: userInput });
+        }
+
+        
+    </script>
+</body>
+</html>
