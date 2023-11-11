@@ -1,0 +1,63 @@
+<!-- template.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Log Report</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
+
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <style>
+    </style>
+</head>
+<body class="container mt-3">
+    <h2>Latest Runs Report</h2>
+    <h3>Log file path: <!-- Log File Path --></h3>
+    <h3>Date created: <!-- Date Created --></h3>
+    <table id="latestRunsTable" class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>Timestamp</th>
+                <th>Hostname</th>
+                <th>Commit Hash</th>
+                <th>Project</th>
+                <th>Tool</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Latest Runs Rows -->
+        </tbody>
+    </table>
+    <h2>Run History</h2>
+    <div id="historyTableContainer">
+        <table id="historyTable" class="table table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Hostname</th>
+                    <th>Commit Hash</th>
+                    <th>Project</th>
+                    <th>Tool Sequence</th>
+                </tr>
+            </thead>
+            <tbody>
+               <!-- History Diagram Rows -->
+            </tbody>
+    </div>
+
+    <script>
+        $('#latestRunsTable').dataTable( {
+            "order": [0,'desc']
+        } );
+
+        $('#historyTable').dataTable( {
+            "order": [0,'desc']
+        } );
+    </script>
+    
+</body>
+</html>
