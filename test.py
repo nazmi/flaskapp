@@ -42,7 +42,7 @@ def main(**config):
 
 if __name__ == '__main__':
     config = {
-        "project_name": "test",
+        "project_name": "hehe",
         "commit_version": "cad2344as",
     }
     main(**config)
