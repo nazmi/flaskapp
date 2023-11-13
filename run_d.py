@@ -1,7 +1,8 @@
 
 
-from utils import telemetry_wrapper
+from utils import log_event, ExitCode
 
-@telemetry_wrapper
-def run_d():
+@log_event(tool="Create map file")
+def rundasdasdasdasdsadasdasdasdsafef_d():
     print("run_d")
+    return ExitCode.SUCCESS

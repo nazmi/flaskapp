@@ -1,7 +1,8 @@
 
 
-from utils import telemetry_wrapper
+from utils import log_event, ExitCode
 
-@telemetry_wrapper(tool="create iccp endpoint")
-def run_c():
+@log_event(tool="Create endpoint")
+def rundasdasdasdasdsadasdasdasdsafef_c():
     print("run_c")
+    return ExitCode.SUCCESS

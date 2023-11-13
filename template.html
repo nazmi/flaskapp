@@ -5,58 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <title>Log Report</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
-
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.slim.min.js" integrity="sha512-sNylduh9fqpYUK5OYXWcBleGzbZInWj8yCJAU57r1dpSK9tP2ghf/SRYCMj+KsslFkCOt3TvJrX2AV/Gc3wOqA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script defer src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script defer src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
     <style>
     </style>
 </head>
 <body class="container mt-3">
-    <h2>Latest Runs Report</h2>
-    <h3>Log file path: <!-- Log File Path --></h3>
-    <h3>Date created: <!-- Date Created --></h3>
-    <table id="latestRunsTable" class="table table-bordered table-hover">
+    <h3>Logs Report</h3>
+    <h4>Log file path: <!-- Log File Path --></h4>
+    <h4>Date created: <!-- Date Created --></h4>
+    <h3>History by Tool</h3>
+    <table id="latestRunsTable" class="table table-bordered table-hover table-striped responsive" width="100%">
         <thead class="thead-light">
             <tr>
-                <th>Timestamp</th>
-                <th>Hostname</th>
-                <th>Commit Hash</th>
-                <th>Project</th>
-                <th>Tool</th>
+                <th scope="col">Timestamp</th>
+                <th scope="col">Run ID</th>
+                <th scope="col">Hostname</th>
+                <th scope="col">Commit Hash</th>
+                <th scope="col">Project</th>
+                <th scope="col">Tool</th>
             </tr>
         </thead>
         <tbody>
             <!-- Latest Runs Rows -->
         </tbody>
     </table>
-    <h2>Run History</h2>
-    <div id="historyTableContainer">
-        <table id="historyTable" class="table table-bordered table-hover">
+    <h4>History by Runs</h2>
+        <table id="historyTable" class="table table-bordered table-hover table-striped responsive" width="100%">
             <thead class="thead-light">
                 <tr>
-                    <th>Timestamp</th>
-                    <th>Hostname</th>
-                    <th>Commit Hash</th>
-                    <th>Project</th>
-                    <th>Tool Sequence</th>
+                    <th scope="col">Timestamp</th>
+                    <th scope="col">Run ID</th>
+                    <th scope="col">Hostname</th>
+                    <th scope="col">Commit Hash</th>
+                    <th scope="col">Project</th>
+                    <th scope="col">Run Sequence [Tool name(exit code)]</th>
                 </tr>
             </thead>
             <tbody>
                <!-- History Diagram Rows -->
             </tbody>
-    </div>
-
+        </table>
     <script>
-        $('#latestRunsTable').dataTable( {
-            "order": [0,'desc']
-        } );
+        $(window).on("load", function() {
+            $('#latestRunsTable').dataTable( {
+                "order": [0,'desc'],
+                responsive: true
+            } );
 
-        $('#historyTable').dataTable( {
-            "order": [0,'desc']
+            $('#historyTable').dataTable( {
+                "order": [0,'desc'],
+                responsive: true
+            } );
         } );
+       
     </script>
     
 </body>

@@ -1,40 +1,17 @@
 import json
+import os
 from collections import defaultdict
 from datetime import datetime
 from operator import itemgetter
-import sys
-import os
-import argparse
-import requests
-
-# read every log file in the directory
-# parse the log file
-# filter out logs with exceptions
-# sort by timestamp
-# aggregate logs by project, then by tool, picking only the latest run
-# group logs by run_id
-# sort groups by the first timestamp in each group
-# read the template content
-# placeholder for latest runs rows
-# placeholder for history diagram rows
-# replace placeholders in the template with actual content
-# write the final HTML content to a new file
-
-
-cwd = os.getcwd()
-log_file_path = os.path.join(cwd, "logs")
-
-log_files = [os.path.join(log_file_path,file) for file in os.listdir(log_file_path) if file.endswith(".log")]
 logs = []
-
-for log_file in log_files:
-    # Read the log file and parse the JSON
-    with open(log_file, 'r') as file:
-        logs.extend([json.loads(line) for line in file])
+log_dir = os.path.join(os.getcwd(), 'logs')
+log_file = os.path.join(log_dir, 'new branch.log')
+with open(log_file, 'r') as file:
+    logs.extend([json.loads(line) for line in file])
 
 # Filter out logs with exceptions and sort by timestamp
 logs_no_exceptions = sorted(
-    (log for log in logs if not log.get('exception')),
+    (log for log in logs if log.get('exception') is None and log.get('exit_code') == ExitCode.SUCCESS),
     key=itemgetter('timestamp'), reverse=True
 )
 
@@ -46,7 +23,6 @@ for log in logs_no_exceptions:
     # Update the record if this tool has no entry or if the log is more recent
     if tool not in latest_runs_per_project[project]:
         latest_runs_per_project[project][tool] = log
-
 
 # Placeholder for latest runs rows
 latest_runs_rows = ''
@@ -70,6 +46,7 @@ for group in sorted_history:
     hostname = group[0]['host']
     commit = group[0]['commit'][0:6]
     project = group[0]['project']
+    exit_code = group[0]['exit_code']
     run_sequence = " -> ".join(log['tool'] for log in group)
     history_diagram_rows += f"<tr><td>{timestamp}</td><td>{hostname}</td><td>{commit}</td><td>{project}</td><td>{run_sequence}</td></tr>"
 
@@ -82,12 +59,11 @@ with open('template.html', 'r') as file:
 current_time = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
 final_html_content = html_template.replace('<!-- Latest Runs Rows -->', latest_runs_rows)
 final_html_content = final_html_content.replace('<!-- History Diagram Rows -->', history_diagram_rows)
-final_html_content = final_html_content.replace('<!-- Log File Path -->', log_file_path)
+final_html_content = final_html_content.replace('<!-- Log File Path -->', log_file)
 final_html_content = final_html_content.replace('<!-- Date Created -->', current_time)
 
 # Write the final HTML content to a new file
-output_filename = 'log_report.html'
-output_file_path = os.path.join(log_file_path, output_filename)
+output_file_path = os.path.join(log_dir, log_file+'.html')
 with open(output_file_path, 'w') as html_file:
     html_file.write(final_html_content)
 
